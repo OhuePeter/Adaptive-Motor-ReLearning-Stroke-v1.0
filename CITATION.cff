@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+
+title: Adaptive-Motor-ReLearning-Stroke-v1.0
+
+message: >
+  If you use this software, please cite this repository and the accompanying manuscript.
+
+authors:
+  - family-names: Ohue
+    given-names: Peter
+
+  - family-names: Blohm
+    given-names: Gunnar
+
+version: 1.0.0
+
+date-released: 2026
+
+license: MIT
+
+repository-code: https://github.com/OhuePeter/Adaptive-Motor-ReLearning-Stroke-v1.0
+
+url: https://github.com/OhuePeter/Adaptive-Motor-ReLearning-Stroke-v1.0
+
+type: software
