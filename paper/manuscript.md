@@ -5,13 +5,13 @@
 ¹Centre for Neuroscience Studies, Queen's University, Kingston, ON, Canada
 ²Department of Biomedical and Molecular Sciences, Queen's University, Kingston, ON, Canada
 
-*Draft — Phase 1 (Abstract / Introduction / Methodology). Results and Discussion to follow in later phases per author's iterative writeup process.*
+*Draft: Phase 1 (Abstract / Introduction / Methodology). Results and Discussion to follow in later phases per author's iterative writeup process.*
 
 ---
 
 ## Abstract
 
-*[To be completed once Results are finalized — target ~200 words summarizing motivation, approach (RL reference trajectories + TRSP comparison + wearable sleeve concept), and key contribution.]*
+*[To be completed once Results are finalized. Target ~200 words summarizing motivation, approach (RL reference trajectories + TRSP comparison + wearable sleeve concept), and key contribution.]*
 
 ---
 
@@ -31,13 +31,13 @@ In this study, our overarching goal is to develop a user-friendly rehabilitation
 
 ## Methodology
 
-We developed an open-source Proximal Policy Optimization (PPO) model, which is an advanced AI control algorithm to simulate how human arms adapt and navigate obstacles under unexpected physical disruptions [@Schulman2017]. This work is currently undergoing internal review for publication [@Ohue2026].
+We developed an open-source Proximal Policy Optimization (PPO) model, a reinforcement-learning control algorithm, to simulate how human arms adapt and navigate obstacles under unexpected physical disruptions [@Schulman2017]. This work is currently undergoing internal review for publication [@Ohue2026].
 
-### Core Innovation & Project Vision
+### Project vision
 
 1. An open-access RL motor-control framework (PPO agent) modeling sensorimotor adaptation, obstacle avoidance, and unlearning/relearning dynamics during stroke recovery.
-2. A low-cost, open-spec motorized arm sleeve designed for home recovery and community clinics, augmenting expensive proprietary devices with smart, open-source software.
-3. Extending our open-source AI models to lower-limb assistive devices to reduce device abandonment and support natural gait dynamics globally.
+2. A low-cost, open-spec motorized arm sleeve designed for home recovery and community clinics, as an open-source alternative to expensive proprietary devices.
+3. Extending our open-source AI models to lower-limb assistive devices to reduce device abandonment and support natural gait dynamics.
 
 ### RL reference trajectories
 
@@ -76,11 +76,11 @@ We propose a motorized arm sleeve with three inertial measurement units (trunk, 
 
 ## Results
 
-*[Phase 2 — to be added.]*
+*[Phase 2: to be added.]*
 
 ## Discussion
 
-*[Phase 2 — to be added.]*
+*[Phase 2: to be added.]*
 
 ## Acknowledgements
 

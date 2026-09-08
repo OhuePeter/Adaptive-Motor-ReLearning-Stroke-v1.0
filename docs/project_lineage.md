@@ -18,6 +18,6 @@
 
 ## What needs adaptation (not yet done)
 
-- `src/clinical/trsp_loader.py`, `compensation_metrics.py`, `trajectory_alignment.py` — implemented: TRSP loading, compensation-angle extraction, and RL-vs-human trajectory alignment/comparison. See `scripts/compare_rl_vs_trsp.py` for a runnable example (currently compares against a placeholder straight-line reference — swap in a real RL rollout array once evaluation rollouts are exported for this project).
+- `src/clinical/trsp_loader.py`, `compensation_metrics.py`, `trajectory_alignment.py` — implemented: TRSP loading, compensation-angle extraction, and RL-vs-human trajectory alignment/comparison. See `scripts/compare_rl_vs_trsp.py` for a runnable example (currently compares against a placeholder straight-line reference; swap in a real RL rollout array once evaluation rollouts are exported for this project).
 - `docs/wearable_sleeve_hardware.md` — v0.1 sensor/hardware design draft (3-IMU sleeve + microcontroller + BLE), not yet built or validated.
 - Still open: export a real RL reference trajectory (2-D array) per perturbation condition from `src/evaluation/` so `scripts/compare_rl_vs_trsp.py` can replace `placeholder_rl_reference()` with the actual companion-paper rollouts.

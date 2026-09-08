@@ -31,7 +31,7 @@ If you'd rather start from an automatic trace and clean it up:
 1. Select the reference image (unlock it first).
 2. Path → Trace Bitmap (`Shift+Alt+B`).
 3. Choose "Edge detection", click OK.
-4. Re-lock the reference, then use the node tool to delete/simplify the extra nodes the auto-trace adds — auto-trace alone is too messy to publish as-is.
+4. Re-lock the reference, then use the node tool to delete/simplify the extra nodes the auto-trace adds; auto-trace alone is too messy to publish as-is.
 
 ## Step 4 — Add joint markers and angles
 
@@ -54,7 +54,7 @@ To set a fill/stroke colour: select the object, open Fill & Stroke (`Shift+Ctrl+
 
 ## Step 6 — Organize layers before export
 
-Put each element type on its own layer: outline, joint markers, angle arcs, text labels. This makes later edits (a reviewer asking to change a label, for example) fast — you just toggle or edit one layer.
+Put each element type on its own layer: outline, joint markers, angle arcs, text labels. This makes later edits (a reviewer asking to change a label, for example) fast: you just toggle or edit one layer.
 
 ## Step 7 — Delete the reference layer
 

@@ -2,7 +2,7 @@
 
 **Adaptive Motor Re-Learning: A Wearable Sensor Framework for Upper-Limb Stroke Rehabilitation**
 
-*Peter Ohue¹, Gunnar Blohm¹,² — ¹Centre for Neuroscience Studies, Queen's University; ²Department of Biomedical and Molecular Sciences, Queen's University*
+*Peter Ohue¹, Gunnar Blohm¹,². ¹Centre for Neuroscience Studies, Queen's University; ²Department of Biomedical and Molecular Sciences, Queen's University*
 
 This project extends [`NeuroRL-ObstacleAvoidance-v1.0`](https://github.com/OhuePeter/NeuroRL-ObstacleAvoidance-v1.0) (Ohue, Oby & Blohm, 2026) from a pure computational model of adaptive obstacle avoidance into a clinically-motivated framework for upper-limb stroke rehabilitation. It compares reinforcement-learning-generated reference trajectories against healthy and post-stroke movement data (Toronto Rehab Stroke Pose dataset), diagnoses compensatory movement strategies, and proposes an open-hardware, sensor-driven wearable sleeve for adaptive motor re-learning.
 
@@ -12,7 +12,7 @@ This project extends [`NeuroRL-ObstacleAvoidance-v1.0`](https://github.com/OhueP
 
 Stroke survivors frequently develop compensatory movement strategies (trunk lean, trunk rotation, shoulder elevation) that substitute for lost range of motion at the shoulder and elbow. Left uncorrected, home-based rehabilitation risks reinforcing these compensations rather than restoring natural kinematics. This project asks:
 
-1. Can an RL-trained control policy — validated as a proxy for adaptive biological motor control in our companion paper (Ohue, Oby & Blohm, 2026) — provide a principled "reference trajectory" against which compensatory deviations in stroke survivors can be measured?
+1. Our companion paper (Ohue, Oby & Blohm, 2026) validated an RL-trained control policy as a proxy for adaptive biological motor control. Can this policy provide a reference trajectory against which compensatory deviations in stroke survivors can be measured?
 2. Can this comparison be delivered through a low-cost, open-hardware wearable sensor sleeve suitable for home and community clinic use?
 
 ## Relationship to prior work
@@ -53,7 +53,7 @@ conda activate neurorl
 pip install -r requirements.txt
 ```
 
-Training/evaluation entry points are unchanged from paper 1 — see `scripts/` and `docs/reproducibility_guide.md` (to be adapted).
+Training/evaluation entry points are unchanged from paper 1; see `scripts/` and `docs/reproducibility_guide.md` (to be adapted).
 
 ## Data
 
@@ -72,4 +72,4 @@ Supported in part by the Connected Minds Program, Canada First Research Excellen
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+MIT. See [`LICENSE`](LICENSE).

@@ -2,7 +2,7 @@
 
 Local copy extracted from `archive.zip` into `data_new/` (10 healthy subjects `H01`–`H10`, 9 post-stroke subjects `P01`–`P09`).
 
-Cite: Dolatabadi et al. (2017); Zhi et al. (2018) — see `paper/references.bib`.
+Cite: Dolatabadi et al. (2017); Zhi et al. (2018); see `paper/references.bib`.
 
 ## Folder layout
 
@@ -30,6 +30,6 @@ Subjects `H01`–`H10` are healthy controls asked to simulate each compensation;
 
 ## Usage in this project
 
-Used as the empirical comparison set against RL-generated reference trajectories (see `paper/manuscript.md`, Methodology). Joint coordinates should be mapped to the same 2-D reach-plane convention as the RL environment before geometric comparison — see `docs/project_lineage.md`.
+Used as the empirical comparison set against RL-generated reference trajectories (see `paper/manuscript.md`, Methodology). Joint coordinates should be mapped to the same 2-D reach-plane convention as the RL environment before geometric comparison; see `docs/project_lineage.md`.
 
 Data files are not tracked in git (large, subject to dataset license); confirm `.gitignore` excludes `data/raw/toronto_rehab_stroke_pose/` before committing.

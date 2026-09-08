@@ -1,6 +1,6 @@
 # Wearable sleeve hardware: proposed architecture (v0.1 design draft)
 
-Status: design phase, not yet built. This is a starting specification meant to be iterated on with a hardware collaborator/engineer — treat all part numbers and costs as placeholders to validate, not final BOM.
+Status: design phase, not yet built. This is a starting specification meant to be iterated on with a hardware collaborator/engineer. Treat all part numbers and costs as placeholders to validate, not final BOM.
 
 ## 1. Sensing requirements (derived from Section 2.3/2.4 of the manuscript)
 
@@ -17,11 +17,11 @@ To reconstruct the same three compensation features already computed in `src/cli
 
 ## 2. Sensor selection
 
-- **IMU**: 9-DOF (accelerometer + gyroscope + magnetometer) modules, e.g. BNO055 or ICM-20948 class parts — chosen for on-chip sensor fusion (quaternion output), which avoids needing a separate Kalman/Madgwick filter implementation on the microcontroller.
+- **IMU**: 9-DOF (accelerometer + gyroscope + magnetometer) modules, e.g. BNO055 or ICM-20948 class parts, chosen for on-chip sensor fusion (quaternion output), which avoids needing a separate Kalman/Madgwick filter implementation on the microcontroller.
 - **Sampling rate**: 100 Hz per IMU is sufficient for reach-speed movements (TRSP recordings run well under this bandwidth); 100 Hz also keeps the 3-sensor data rate low enough for a single low-power microcontroller and Bluetooth Low Energy (BLE) link.
 - **Communication between sensors and hub**: wired I²C/SPI daisy chain along the sleeve (simpler, more robust than 3 independent wireless links) feeding a single microcontroller.
 - **Microcontroller**: an ESP32-class board (built-in BLE + WiFi, enough compute for on-device quaternion-to-Euler conversion and the compensation-angle formulas already implemented in Python) or a Nordic nRF52-class board if BLE power budget is the priority over WiFi.
-- **Actuation (motorized assist)**: a small geared DC or servo motor at the elbow/shoulder joint of the sleeve, driven only when a compensation threshold is crossed, providing corrective torque or haptic cueing rather than continuous assistance — matching the "flag deviations, don't replace the movement" design goal in the manuscript.
+- **Actuation (motorized assist)**: a small geared DC or servo motor at the elbow/shoulder joint of the sleeve, driven only when a compensation threshold is crossed, providing corrective torque or haptic cueing rather than continuous assistance, matching the "flag deviations, don't replace the movement" design goal in the manuscript.
 - **Power**: single rechargeable Li-Po cell (sized for ≥2 hours continuous use at 100 Hz), with a low-battery cutoff to avoid actuator misbehavior.
 
 ## 3. Data flow
@@ -52,4 +52,4 @@ On-device, the MCU only needs to convert each IMU's quaternion to the same trunk
 ## 5. Validation plan (before any patient use)
 
 1. Bench-test each IMU's angle output against the corresponding TRSP-derived angle definitions, using a rigid mannequin arm or a healthy volunteer performing the same `Rch_Fwr_Bck` / `Rch_Sd2Sd_Bck` tasks, to confirm the wearable's angle estimates agree with the Kinect-derived ground truth within an acceptable tolerance.
-2. Only after (1) passes should any motorized/haptic feedback be enabled, and only under supervision — this is a research prototype, not a certified medical device.
+2. Only after (1) passes should any motorized/haptic feedback be enabled, and only under supervision; this is a research prototype, not a certified medical device.
