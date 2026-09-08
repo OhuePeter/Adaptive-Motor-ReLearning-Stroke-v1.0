@@ -18,6 +18,6 @@
 
 ## What needs adaptation (not yet done)
 
-- Map the 2-D point-mass RL environment's reach trajectory onto the same coordinate/plane convention as the TRSP Kinect joint data (shoulder-elbow-wrist chain) so RL vs. human trajectories are directly comparable.
-- Extend `analysis/behavioural/` with a compensation-detection metric (trunk rotation angle, shoulder elevation, forward lean) mirroring Zhi et al. (2018)'s automatic detection features, applied to both TRSP joint data and any wearable-sensor stream.
-- Define the wearable sleeve's sensor set (IMU/EMG channel count, sampling rate) and its mapping onto the RL policy's hidden-layer state space, once hardware specs are finalized.
+- `src/clinical/trsp_loader.py`, `compensation_metrics.py`, `trajectory_alignment.py` — implemented: TRSP loading, compensation-angle extraction, and RL-vs-human trajectory alignment/comparison. See `scripts/compare_rl_vs_trsp.py` for a runnable example (currently compares against a placeholder straight-line reference — swap in a real RL rollout array once evaluation rollouts are exported for this project).
+- `docs/wearable_sleeve_hardware.md` — v0.1 sensor/hardware design draft (3-IMU sleeve + microcontroller + BLE), not yet built or validated.
+- Still open: export a real RL reference trajectory (2-D array) per perturbation condition from `src/evaluation/` so `scripts/compare_rl_vs_trsp.py` can replace `placeholder_rl_reference()` with the actual companion-paper rollouts.
