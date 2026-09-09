@@ -15,8 +15,6 @@
 
 ---
 
-**Figure 1.** *[Upper-limb schematic pending: create `figures/fig1_schematic.svg`/`.png` following the Inkscape workflow in `docs/schematic_workflow.md`, then this reference will render.]*
-
 ![Figure 1: Upper-limb reaching schematic showing the shoulder, elbow, and wrist state variables used by the RL environment.](figures/fig1_schematic.png)
 
 ---
