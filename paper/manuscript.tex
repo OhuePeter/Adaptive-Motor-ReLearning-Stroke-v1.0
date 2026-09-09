@@ -15,6 +15,7 @@
 
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath, amssymb}
+\usepackage{graphicx}
 \usepackage{authblk}
 \usepackage{hyperref}
 \usepackage{natbib}
@@ -40,6 +41,15 @@
 \begin{abstract}
 [To be completed once Results are finalized. Target ~200 words summarizing motivation, approach (RL reference trajectories + TRSP comparison + wearable sleeve concept), and key contribution.]
 \end{abstract}
+
+\begin{figure}[h]
+  \centering
+  % Pending: create figures/fig1_schematic.svg/.png via the Inkscape workflow in docs/schematic_workflow.md,
+  % then uncomment the line below.
+  % \includegraphics[width=0.7\textwidth]{figures/fig1_schematic.png}
+  \caption{Upper-limb reaching schematic showing the shoulder, elbow, and wrist state variables used by the RL environment.}
+  \label{fig:schematic}
+\end{figure}
 
 \section{Introduction}
 
@@ -112,11 +122,20 @@ We propose a motorized arm sleeve with three inertial measurement units (trunk, 
 
 \section{Results}
 
-[Phase 2: to be added.]
+[Phase 2: numbers below are pending a full RL training run. Do not fill in placeholder/smoke-test numbers as findings.]
+
+Once \texttt{scripts/train.py} has been run to convergence (\texttt{configs/training.yaml}: 3{,}000{,}000 timesteps) and \texttt{scripts/export\_rl\_reference.py} has exported a real reference trajectory for each perturbation condition, \texttt{scripts/batch\_compare\_rl\_vs\_trsp.py} produces one row per TRSP trial (149 trials: 10 healthy $\times$ up to 12 tasks, 9 post-stroke $\times$ variable repeated trials) in \texttt{data/processed/rl\_vs\_trsp\_summary.csv}, with:
+
+\begin{itemize}
+  \item \texttt{path\_length\_ratio}, \texttt{mean\_lateral\_deviation}, \texttt{max\_lateral\_deviation} per trial, comparing the projected wrist path against the matching RL reference condition.
+  \item \texttt{mean\_lean\_deg}, \texttt{mean\_trunk\_rot\_deg}, \texttt{mean\_shoulder\_elev} per trial, from \texttt{compensation\_metrics.py}.
+\end{itemize}
+
+This section will report: (1) path-length ratio and lateral deviation for healthy natural-reach trials vs. the P0 (unperturbed) RL reference, establishing a baseline; (2) the same metrics for healthy simulated-compensation trials (\texttt{LnFwr}, \texttt{ShElev}, \texttt{TrRot}), to confirm the pipeline detects known, instructed compensations as larger deviations than the natural-reach baseline; (3) the same metrics for post-stroke trials, to test whether uninstructed compensation in this group falls closer to the simulated-compensation range than to the healthy-natural range; and (4) whether comparing against graded perturbation conditions (L1--L3, R1--R3) rather than only P0 changes the group separation.
 
 \section{Discussion}
 
-[Phase 2: to be added.]
+[Phase 2: to be added, once Results are populated with a real training run.]
 
 \section*{Acknowledgements}
 

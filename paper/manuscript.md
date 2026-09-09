@@ -15,6 +15,12 @@
 
 ---
 
+**Figure 1.** *[Upper-limb schematic pending: create `figures/fig1_schematic.svg`/`.png` following the Inkscape workflow in `docs/schematic_workflow.md`, then this reference will render.]*
+
+![Figure 1: Upper-limb reaching schematic showing the shoulder, elbow, and wrist state variables used by the RL environment.](figures/fig1_schematic.png)
+
+---
+
 ## Introduction
 
 Stroke disrupts blood flow to the brain. It affects more than 13 million people worldwide, kills more than 5 million people annually, and is a leading cause of long-term disability [@Lu2012; @Kuriakose2020]. Motor deficits are a major neurological consequence of stroke and are associated with loss of independence and reduced quality of life [@Lucchetti2025]. Accurate diagnosis of the resulting physical impairment, including changes in function of the affected limb, is a prerequisite for recommending appropriate remediation [@Gowland1993; @Mehrholz2015].
@@ -76,11 +82,18 @@ We propose a motorized arm sleeve with three inertial measurement units (trunk, 
 
 ## Results
 
-*[Phase 2: to be added.]*
+*[Phase 2: numbers below are pending a full RL training run. Do not fill in placeholder/smoke-test numbers as findings.]*
+
+Once `scripts/train.py` has been run to convergence (`configs/training.yaml`: 3,000,000 timesteps) and `scripts/export_rl_reference.py` has exported a real reference trajectory for each perturbation condition, `scripts/batch_compare_rl_vs_trsp.py` produces one row per TRSP trial (149 trials: 10 healthy x up to 12 tasks, 9 post-stroke x variable repeated trials) in `data/processed/rl_vs_trsp_summary.csv`, with:
+
+- `path_length_ratio`, `mean_lateral_deviation`, `max_lateral_deviation` per trial, comparing the projected wrist path against the matching RL reference condition.
+- `mean_lean_deg`, `mean_trunk_rot_deg`, `mean_shoulder_elev` per trial, from `compensation_metrics.py`.
+
+This section will report: (1) path-length ratio and lateral deviation for healthy natural-reach trials vs. the P0 (unperturbed) RL reference, establishing a baseline; (2) the same metrics for healthy simulated-compensation trials (`LnFwr`, `ShElev`, `TrRot`), to confirm the pipeline detects known, instructed compensations as larger deviations than the natural-reach baseline; (3) the same metrics for post-stroke trials, to test whether uninstructed compensation in this group falls closer to the simulated-compensation range than to the healthy-natural range; and (4) whether comparing against graded perturbation conditions (L1-L3, R1-R3) rather than only P0 changes the group separation.
 
 ## Discussion
 
-*[Phase 2: to be added.]*
+*[Phase 2: to be added, once Results are populated with a real training run.]*
 
 ## Acknowledgements
 
