@@ -18,6 +18,6 @@
 
 ## What needs adaptation (not yet done)
 
-- `src/clinical/trsp_loader.py`, `compensation_metrics.py`, `trajectory_alignment.py` — implemented: TRSP loading, compensation-angle extraction, and RL-vs-human trajectory alignment/comparison. See `scripts/compare_rl_vs_trsp.py` for a runnable example (currently compares against a placeholder straight-line reference; swap in a real RL rollout array once evaluation rollouts are exported for this project).
+- `src/clinical/trsp_loader.py`, `compensation_metrics.py`, `trajectory_alignment.py`, `rl_reference.py` — implemented: TRSP loading, compensation-angle extraction, RL-vs-human trajectory alignment/comparison, and RL reference export/loading. `scripts/compare_rl_vs_trsp.py` (single trial) and `scripts/batch_compare_rl_vs_trsp.py` (all subjects/tasks) run end-to-end.
 - `docs/wearable_sleeve_hardware.md` — v0.1 sensor/hardware design draft (3-IMU sleeve + microcontroller + BLE), not yet built or validated.
-- Still open: export a real RL reference trajectory (2-D array) per perturbation condition from `src/evaluation/` so `scripts/compare_rl_vs_trsp.py` can replace `placeholder_rl_reference()` with the actual companion-paper rollouts.
+- Still open: train a policy with `scripts/train.py`, evaluate it per perturbation condition with `scripts/evaluate.py`, then run `scripts/export_rl_reference.py --condition <P0|L1|L2|L3|R1|R2|R3>` to replace the straight-line placeholder with the real trained-policy rollout for that condition.

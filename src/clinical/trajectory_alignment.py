@@ -33,7 +33,7 @@ import numpy as np
 from src.evaluation.metrics import BehaviourMetrics
 
 
-def _resample(path: np.ndarray, n_points: int) -> np.ndarray:
+def resample_path(path: np.ndarray, n_points: int) -> np.ndarray:
     """Resample an (n, d) path to (n_points, d) via linear interpolation."""
 
     t_src = np.linspace(0.0, 1.0, path.shape[0])
@@ -71,8 +71,8 @@ def align_to_reference(
     start/end points. Returns (aligned_human, resampled_reference).
     """
 
-    human_rs = _resample(human_path_2d, n_points)
-    ref_rs = _resample(rl_reference_2d, n_points)
+    human_rs = resample_path(human_path_2d, n_points)
+    ref_rs = resample_path(rl_reference_2d, n_points)
 
     human_disp = human_rs[-1] - human_rs[0]
     ref_disp = ref_rs[-1] - ref_rs[0]

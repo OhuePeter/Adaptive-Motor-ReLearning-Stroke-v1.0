@@ -90,3 +90,20 @@ def list_subjects(dataset_root: Path) -> list:
 def list_tasks(dataset_root: Path, subject: str) -> list:
 
     return sorted(p.name for p in (Path(dataset_root) / subject).iterdir() if p.is_dir())
+
+
+def wrist_side_for_task(task: str) -> str:
+    """
+    TRSP task folder names encode the reaching arm as an '_L' or '_R'
+    underscore-separated token (e.g. 'Rch_Fwr_Bck_TrRot_L', or
+    'Rch_Fwr_Bck_L_1' for a repeated trial). Returns 'Left' or 'Right'.
+    """
+
+    parts = task.split("_")
+
+    if "L" in parts:
+        return "Left"
+    if "R" in parts:
+        return "Right"
+
+    raise ValueError(f"Task '{task}' has no '_L'/'_R' token; cannot infer reaching side")

@@ -1,0 +1,127 @@
+% ==========================================================
+% Adaptive Motor Re-Learning: A Wearable Sensor Framework for
+% Upper-Limb Stroke Rehabilitation
+%
+% Authors: Peter Ohue, Gunnar Blohm
+%
+% To use in Overleaf: upload this file together with
+% references.bib (same folder), set this as the main document,
+% and compile with pdfLaTeX + BibTeX (or biber, see note below).
+% This mirrors paper/manuscript.md; keep the two in sync by hand
+% until Results/Discussion are finalized.
+% ==========================================================
+
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{authblk}
+\usepackage{hyperref}
+\usepackage{natbib}
+\bibliographystyle{unsrtnat}
+
+\title{Adaptive Motor Re-Learning: A Wearable Sensor Framework for Upper-Limb Stroke Rehabilitation}
+
+\author[1]{Peter Ohue}
+\author[1,2]{Gunnar Blohm}
+\affil[1]{Centre for Neuroscience Studies, Queen's University, Kingston, ON, Canada}
+\affil[2]{Department of Biomedical and Molecular Sciences, Queen's University, Kingston, ON, Canada}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\emph{Draft: Phase 1 (Abstract / Introduction / Methodology). Results and Discussion to follow in later phases per author's iterative writeup process.}
+\end{center}
+
+\begin{abstract}
+[To be completed once Results are finalized. Target ~200 words summarizing motivation, approach (RL reference trajectories + TRSP comparison + wearable sleeve concept), and key contribution.]
+\end{abstract}
+
+\section{Introduction}
+
+Stroke disrupts blood flow to the brain. It affects more than 13 million people worldwide, kills more than 5 million people annually, and is a leading cause of long-term disability \citep{Lu2012,Kuriakose2020}. Motor deficits are a major neurological consequence of stroke and are associated with loss of independence and reduced quality of life \citep{Lucchetti2025}. Accurate diagnosis of the resulting physical impairment, including changes in function of the affected limb, is a prerequisite for recommending appropriate remediation \citep{Gowland1993,Mehrholz2015}.
+
+Normal upper-limb function during daily-life tasks depends on coordinated shoulder-arm kinematics and muscular synergies across at least 30 common activities, with hand postural synergies contributing substantially to grasp force \citep{Hu2018,Averta2018,Saudabayev2018}. Linking forearm muscle activity to hand kinematics is central to prosthetic design and 3-D biomechanical modelling \citep{JarqueBou2019}; the same coordination is what stroke-related motor deficits disrupt.
+
+When normal coordination is lost, stroke survivors often compensate by recruiting alternative movement pathways and unaffected joints and muscles, a substitution that can be inefficient and reinforce atypical movement patterns \citep{Dolatabadi2017}. Rehabilitation devices delivered to patients are frequently abandoned after delivery; abandonment is driven by a poor fit between the device and the user's actual needs, insufficient user involvement in device selection, and lack of ongoing support once the device is at home \citep{Sugawara2018}. Robotic and electromechanical devices carry the same risk, and their cost and clinic-based delivery model make sustained home use harder \citep{Mehrholz2015}. An upper-limb rehabilitation device should therefore be low-cost and open-hardware, so it can reach the home and the community clinic rather than only the specialized centre, and adaptive, so it can flag emerging compensation in real time rather than depend only on intermittent clinical supervision.
+
+Home-based use of these devices needs supervision, because unmonitored recruitment of unaffected muscles and joints often leads to undesirable outcomes \citep{Zhi2018}. To characterize these compensations, prior work has simulated three types with healthy participants: forward trunk lean, trunk rotation, and shoulder elevation \citep{Zhi2018,Dolatabadi2017}. When post-stroke survivors instead follow homework-based rehabilitation programs without this supervision, new and undesirable compensation patterns risk developing, making later unlearning and relearning necessary \citep{Lin2019}. Rehabilitation programs should include task-specific training to induce plasticity and motor recovery; individualized strategies have been useful in identifying relevant therapeutic goals and maximizing long-term gain \citep{Takeuchi2013}.
+
+In this study, our goal is to develop a rehabilitation framework for upper-limb post-stroke management that is usable outside the specialized clinic. We compare RL-generated reference trajectories against the reach kinematics of healthy participants (performing natural and simulated-compensation reaches) and post-stroke participants, to quantify compensation strategies rather than rely on visual inspection alone. This framework builds on a companion computational study relating RL-derived internal representations to internal representations in biological neurons during motor adaptation \citep{Ohue2026}, and on our earlier work on accessible computational-neuroscience tools and training \citep{Chinagorom2025,OhuePythonUnpub}. We further propose an adaptive motor-relearning program built around a neuroinspired wearable sleeve, pairing open-source RL control software with a low-cost, open-hardware design, so stroke survivors can receive continuous, condition-specific feedback while relearning natural movement.
+
+\section{Methodology}
+
+We developed an open-source Proximal Policy Optimization (PPO) model, a reinforcement-learning control algorithm, to simulate how human arms adapt and navigate obstacles under unexpected physical disruptions \citep{Schulman2017}. This work is currently undergoing internal review for publication \citep{Ohue2026}.
+
+\subsection*{Project vision}
+
+\begin{enumerate}
+  \item An open-access RL motor-control framework (PPO agent) modeling sensorimotor adaptation, obstacle avoidance, and unlearning/relearning dynamics during stroke recovery.
+  \item A low-cost, open-spec motorized arm sleeve designed for home recovery and community clinics, as an open-source alternative to expensive proprietary devices.
+  \item Extending our open-source AI models to lower-limb assistive devices to reduce device abandonment and support natural gait dynamics.
+\end{enumerate}
+
+\subsection{RL reference trajectories}
+
+The RL controller is a PPO actor-critic agent trained in a 2-D point-mass reaching environment under Newtonian dynamics. Its state $\mathbf{s}_t = (x_t, y_t, \dot{x}_t, \dot{y}_t)$ evolves under
+
+\begin{equation}
+\dot{\mathbf{s}}_t = f(\mathbf{s}_t, \mathbf{a}_t) =
+\begin{bmatrix}
+\dot{x}_t \\
+\dot{y}_t \\
+\tfrac{1}{m}\left(F_x(\mathbf{a}_t) + F_x^{\text{pert}}(t)\right) \\
+\tfrac{1}{m}\left(F_y(\mathbf{a}_t) + F_y^{\text{pert}}(t)\right)
+\end{bmatrix},
+\label{eq:dynamics}
+\end{equation}
+
+where $\mathbf{a}_t$ is the policy's continuous control action, $m$ is the point-mass, and $F^{\text{pert}}(t)$ is a graded lateral force impulse applied during a fixed perturbation window. Policy and value networks are two-hidden-layer (256-unit) feedforward networks, trained with the clipped PPO surrogate objective
+
+\begin{equation}
+L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t\left[\min\left(r_t(\theta)\hat{A}_t,\ \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t\right)\right],
+\qquad
+r_t(\theta) = \frac{\pi_\theta(\mathbf{a}_t\mid \mathbf{s}_t)}{\pi_{\theta_{\text{old}}}(\mathbf{a}_t\mid \mathbf{s}_t)}.
+\label{eq:ppo-clip}
+\end{equation}
+
+We treat the trained policy's rollouts under each perturbation condition (P0 control; L1--L3, R1--R3 graded lateral perturbations) as reference trajectories: task-optimal movement paths, unconstrained by anatomy, against which human reach geometry can be compared for compensation.
+
+\subsection{Human reach-kinematics data}
+
+We use the Toronto Rehab Stroke Pose (TRSP) dataset \citep{Dolatabadi2017,Zhi2018}. It contains Kinect-derived 3-D joint-position time series (25-joint skeleton) for:
+
+\begin{itemize}
+  \item 10 healthy participants (H01--H10), each performing standardized forward/backward and side-to-side reaches under a natural condition and under three simulated compensations: forward trunk lean (\texttt{LnFwr}), shoulder elevation (\texttt{ShElev}), and trunk rotation (\texttt{TrRot}), left and right (\texttt{\_L}/\texttt{\_R}).
+  \item 9 post-stroke participants (P01--P09) performing the same reach tasks without an instructed compensation strategy.
+\end{itemize}
+
+Each trial directory contains \texttt{Joint\_Positions.csv} (25 joints $\times$ 3 coordinates, stacked frame by frame) and \texttt{Labels.csv} (one label per frame). The file schema is documented in \texttt{data/raw/README.md}.
+
+\subsection{Trajectory alignment and compensation quantification}
+
+Human wrist trajectories are projected onto their own 2-D reach plane by PCA, resampled to a common time base, and rigidly aligned (translation + uniform scale) to the matching RL reference trajectory. We report a path-length ratio and the mean/max lateral deviation between the two. Three compensation features are computed per frame directly from the joint data: forward lean angle, trunk rotation angle, and shoulder elevation, following the compensation categories used to build the TRSP dataset \citep{Zhi2018}. This pipeline is implemented in \texttt{src/clinical/} (\texttt{trsp\_loader.py}, \texttt{compensation\_metrics.py}, \texttt{trajectory\_alignment.py}, \texttt{rl\_reference.py}). \texttt{scripts/export\_rl\_reference.py} averages trained-policy rollouts (from \texttt{scripts/evaluate.py}) into a canonical reference path per perturbation condition, and \texttt{scripts/compare\_rl\_vs\_trsp.py} / \texttt{scripts/batch\_compare\_rl\_vs\_trsp.py} run the single-trial and full-dataset comparison against that reference (falling back to a straight-line placeholder until a policy has been trained).
+
+\subsection{Wearable sensor framework}
+
+We propose a motorized arm sleeve with three inertial measurement units (trunk, upper arm, forearm) to estimate the same three compensation features outside the lab, in real time. Sensor angles are compared continuously against the RL reference trajectory for the matching reach task; a deviation beyond a clinician-set tolerance triggers feedback. This extends the real-time visual-feedback approach shown to reduce compensatory motion in home-based exercise \citep{Lin2019} to a model-based, condition-specific reference rather than a single fixed target. The proposed sensor set, microcontroller choice, and validation plan are detailed in \texttt{docs/wearable\_sleeve\_hardware.md}.
+
+\section{Results}
+
+[Phase 2: to be added.]
+
+\section{Discussion}
+
+[Phase 2: to be added.]
+
+\section*{Acknowledgements}
+
+This work was supported in part by the Connected Minds Program, Canada First Research Excellence Fund, Grant No. CFREF-2022-00010.
+
+\bibliography{references}
+
+\end{document}

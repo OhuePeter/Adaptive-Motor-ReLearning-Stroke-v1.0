@@ -8,3 +8,12 @@ data/processed/*.csv
 experiments/**/checkpoints/
 experiments/**/logs/
 .DS_Store
+paper/*.aux
+paper/*.log
+paper/*.bbl
+paper/*.blg
+paper/*.out
+paper/*.toc
+paper/*.fls
+paper/*.fdb_latexmk
+paper/*.synctex.gz

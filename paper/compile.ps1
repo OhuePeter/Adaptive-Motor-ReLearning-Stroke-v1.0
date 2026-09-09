@@ -1,11 +1,11 @@
 # compile.ps1 -- run from the paper/ directory
-# Compiles manuscript_revised.tex -> manuscript_revised.pdf
+# Compiles manuscript.tex -> manuscript.pdf
 # Requires MiKTeX (pdflatex + bibtex on PATH)
 
 Set-Location $PSScriptRoot
 
-$tex = "manuscript_revised.tex"
-$base = "manuscript_revised"
+$tex = "manuscript.tex"
+$base = "manuscript"
 
 Write-Host "=== Pass 1: pdflatex ===" -ForegroundColor Cyan
 pdflatex -interaction=nonstopmode $tex
