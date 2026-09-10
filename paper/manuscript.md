@@ -45,19 +45,33 @@ We developed an open-source Proximal Policy Optimization (PPO) model, a reinforc
 
 ### RL reference trajectories
 
-The RL controller is a PPO actor-critic agent trained in a 2-D point-mass reaching environment under Newtonian dynamics. Its state $\mathbf{s}_t = (x_t, y_t, \dot{x}_t, \dot{y}_t)$ evolves under
+The RL controller is a PPO actor-critic agent trained on a 2-D obstacle-avoidance reaching task, following the environment, reward function, and perturbation protocol of our companion paper [@Ohue2026]. The agent is a point mass that receives continuous force commands and evolves under Newtonian dynamics inside a bounded rectangular workspace containing a fixed goal and two static obstacles forming a corridor. Its observation is expressed in agent-centred coordinates,
 
 $$
-\dot{\mathbf{s}}_t = f(\mathbf{s}_t, \mathbf{a}_t) = \begin{bmatrix} \dot{x}_t \\ \dot{y}_t \\ \tfrac{1}{m}\left(F_x(\mathbf{a}_t) + F_x^{\text{pert}}(t)\right) \\ \tfrac{1}{m}\left(F_y(\mathbf{a}_t) + F_y^{\text{pert}}(t)\right) \end{bmatrix},
+\mathbf{s}_t = \big[g_x - x_t,\ g_y - y_t,\ o_{Lx} - x_t,\ o_{Ly} - y_t,\ o_{Rx} - x_t,\ o_{Ry} - y_t,\ v_{x,t},\ v_{y,t}\big],
 $$
 
-where $\mathbf{a}_t$ is the policy's continuous control action, $m$ is the point-mass, and $F^{\text{pert}}(t)$ is a graded lateral force impulse applied during a fixed perturbation window. Policy and value networks are two-hidden-layer (256-unit) feedforward networks, trained with the clipped PPO surrogate objective
+where $(x_t, y_t)$ and $(v_{x,t}, v_{y,t})$ are the agent's position and velocity, $(g_x, g_y)$ is the goal location, and $(o_L, o_R)$ are the centres of the left and right obstacles. The reward at each timestep combines four terms,
 
 $$
-L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t\left[\min\left(r_t(\theta)\hat{A}_t,\ \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t\right)\right], \qquad r_t(\theta) = \frac{\pi_\theta(\mathbf{a}_t\mid \mathbf{s}_t)}{\pi_{\theta_{\text{old}}}(\mathbf{a}_t\mid \mathbf{s}_t)}.
+R_t = w_p \Delta d_{\text{goal}} - w_v \lVert \mathbf{v}_t \rVert - w_c C_t + w_s S_t,
 $$
 
-We treat the trained policy's rollouts under each perturbation condition (P0 control; L1–L3, R1–R3 graded lateral perturbations) as reference trajectories: task-optimal movement paths, unconstrained by anatomy, against which human reach geometry can be compared for compensation.
+rewarding progress toward the goal, penalising excessive speed, penalising collision ($C_t=1$ on collision), and rewarding successful goal attainment ($S_t=1$ on success). Policy and value networks are separate two-hidden-layer (256-unit, ReLU) feedforward MLPs, trained with the clipped PPO surrogate objective
+
+$$
+L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t\left[\min\left(r_t(\theta)\hat{A}_t,\ \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t\right)\right], \qquad r_t(\theta) = \frac{\pi_\theta(\mathbf{a}_t\mid \mathbf{s}_t)}{\pi_{\theta_{\text{old}}}(\mathbf{a}_t\mid \mathbf{s}_t)},
+$$
+
+using Stable-Baselines3 with clip parameter $\epsilon=0.2$, learning rate $3\times10^{-4}$, discount $\gamma=0.99$, GAE parameter $\lambda=0.95$, value-loss coefficient 0.5, and maximum gradient norm 0.5, for $3\times10^6$ environment timesteps (`configs/training.yaml`) [@Schulman2017]. *[Note: this repository's `ent_coef` is 0.01; the companion paper reports 0.005 for the same hyperparameter -- confirm which value the reference policy should use before final submission.]*
+
+To probe online correction, a transient lateral force impulse is applied for six timesteps starting at $t=50$:
+
+$$
+f_x(t) = p_i, \quad t \in [50, 55], \quad p_i \in \{\pm0.15, \pm0.30, \pm0.45\},
+$$
+
+giving seven evaluation conditions: an unperturbed control (P0), three leftward magnitudes (L1-L3), and three rightward magnitudes (R1-R3). We treat the trained policy's rollouts under each condition as reference trajectories: task-optimal movement paths, unconstrained by anatomy, against which human reach geometry can be compared for compensation.
 
 ### Human reach-kinematics data
 
